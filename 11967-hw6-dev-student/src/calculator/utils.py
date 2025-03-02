@@ -93,8 +93,20 @@ def can_use_calculator(s: str) -> bool:
         See the instruction/explanation in Q1.2
     """
     # TODO
-    pass
+    print(s)
+    if len(s) < 5:
+        return False
+    if s.rfind("<") == -1 or s[-2:] != ">>":
+        return False
 
+    expr = s[s.rfind("<<")+2: -2]
+    if expr == '':
+        return False
+    for char in expr:
+        if (char not in {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '<', '>', ' ', '(', ')', '?'}):
+            return False
+    
+    return True
 
 def use_calculator(input: str) -> str:
     """Run calculator on the (potentially not well-formed) string
@@ -112,7 +124,14 @@ def use_calculator(input: str) -> str:
     Hint: use safe_eval()
     """
     # TODO
-    pass
+    print(input)
+
+    if not can_use_calculator(input):
+        return input
+    else:
+        expr = input[input.rfind("<<")+2: -2]
+        print(expr)
+        return input + str(safe_eval(expr))
 
 
 def extract_label(answer: str) -> float:
